@@ -10,6 +10,7 @@ import java.util.function.Function;
  * Immutable List represented by a BitSet
  * @param <E>
  */
+@Deprecated
 public class BitSetList<E> extends AbstractSequentialList<E> {
 
     private BitSet bitSet;
