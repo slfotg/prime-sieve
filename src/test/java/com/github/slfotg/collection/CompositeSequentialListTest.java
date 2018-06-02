@@ -1,14 +1,13 @@
 package com.github.slfotg.collection;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
-import java.util.BitSet;
 import java.util.List;
 import java.util.ListIterator;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
 
 public class CompositeSequentialListTest {
 
