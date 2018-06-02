@@ -1,6 +1,8 @@
 # prime-sieve
 
 [![Build Status](https://api.travis-ci.org/slfotg/prime-sieve.svg?branch=master)](http://travis-ci.org/slfotg/prime-sieve)
+[![Alert Status](https://sonarcloud.io/api/project_badges/measure?project=com.github.slfotg%3Aprime-sieve&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.github.slfotg%3Aprime-sieve)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=com.github.slfotg%3Aprime-sieve&metric=bugs)](https://sonarcloud.io/dashboard?id=com.github.slfotg%3Aprime-sieve)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=com.github.slfotg%3Aprime-sieve&metric=coverage)](https://sonarcloud.io/dashboard?id=com.github.slfotg%3Aprime-sieve)
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=com.github.slfotg%3Aprime-sieve&metric=sqale_index)](https://sonarcloud.io/dashboard?id=com.github.slfotg%3Aprime-sieve)
 
