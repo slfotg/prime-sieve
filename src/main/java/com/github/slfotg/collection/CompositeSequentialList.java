@@ -11,8 +11,8 @@ public class CompositeSequentialList<E> extends AbstractSequentialList<E> {
     private int size;
 
     public CompositeSequentialList(Collection<List<E>> lists) {
-        this.lists = new ArrayList<List<E>>(lists);
-        size = this.lists.stream().mapToInt(l -> l.size()).sum();
+        this.lists = new ArrayList<>(lists);
+        size = this.lists.stream().mapToInt(List::size).sum();
     }
 
     @Override
