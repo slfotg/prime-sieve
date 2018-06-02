@@ -8,35 +8,36 @@ import java.util.NoSuchElementException;
 public class ImmutableBitSetList extends AbstractSequentialList<Integer> {
 
     protected BitSet bitSet;
-
     protected int size;
 
     public ImmutableBitSetList(BitSet bitSet) {
         this.bitSet = bitSet;
-        this.size = -1;
+        this.size = bitSet.cardinality();
     }
 
     @Override
     public ListIterator<Integer> listIterator(int index) {
-        return new ImmutableBitSetListIterator(bitSet, index);
+        if (index != 0 && (index < 0 || index >= size)) {
+            throw new IndexOutOfBoundsException();
+        }
+        return new ImmutableBitSetListIterator(bitSet, size, index);
     }
 
     @Override
     public int size() {
-        if (size == -1) {
-            size = bitSet.cardinality();
-        }
         return size;
     }
 
     static class ImmutableBitSetListIterator implements ListIterator<Integer> {
 
         protected BitSet bitSet;
+        protected int size;
         protected int index;
         protected int value;
 
-        public ImmutableBitSetListIterator(BitSet bitSet, int index) {
+        public ImmutableBitSetListIterator(BitSet bitSet, int size, int index) {
             this.bitSet = bitSet;
+            this.size = size;
             this.index = -1;
             this.value = -1;
             while (this.index < index) {
@@ -51,7 +52,7 @@ public class ImmutableBitSetList extends AbstractSequentialList<Integer> {
 
         @Override
         public boolean hasNext() {
-            return value != -1 || index == -1;
+            return index < size;
         }
 
         @Override

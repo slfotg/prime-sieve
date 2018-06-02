@@ -1,9 +1,12 @@
 package com.github.slfotg.collection;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -40,5 +43,20 @@ public class ImmutableBitSetListTest {
             assertEquals(it1.previous(), it2.previous());
         }
         assertEquals(false, it2.hasPrevious());
+    }
+
+    @Test
+    public void testEmptyList() {
+        ImmutableBitSetList emptyList = new ImmutableBitSetList(new BitSet(10));
+        assertEquals(new ArrayList<>(), emptyList);
+
+        Iterator<Integer> iterator = emptyList.iterator();
+        assertFalse(iterator.hasNext());
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testNegativeIteratorIndex() {
+        ImmutableBitSetList emptyList = new ImmutableBitSetList(new BitSet(10));
+        emptyList.listIterator(-1);
     }
 }
