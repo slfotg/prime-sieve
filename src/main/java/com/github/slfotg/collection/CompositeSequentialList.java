@@ -1,6 +1,11 @@
 package com.github.slfotg.collection;
 
-import java.util.*;
+import java.util.AbstractSequentialList;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 /**
  * Immutable class representing a collection of lists
