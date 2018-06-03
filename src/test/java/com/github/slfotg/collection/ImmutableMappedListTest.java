@@ -1,6 +1,7 @@
 package com.github.slfotg.collection;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 import java.util.function.Function;
 
 import org.junit.Before;
@@ -55,10 +57,12 @@ public class ImmutableMappedListTest {
         ListIterator<Integer> mappedIterator = mappedList.listIterator();
         while (originalIterator.hasNext()) {
             assertTrue(mappedIterator.hasNext());
+            assertEquals(originalIterator.nextIndex(), mappedIterator.nextIndex());
             assertEquals(mappingFunction.apply(originalIterator.next()), mappedIterator.next());
         }
         while (originalIterator.hasPrevious()) {
             assertTrue(mappedIterator.hasPrevious());
+            assertEquals(originalIterator.previousIndex(), mappedIterator.previousIndex());
             assertEquals(mappingFunction.apply(originalIterator.previous()), mappedIterator.previous());
         }
     }
@@ -71,5 +75,24 @@ public class ImmutableMappedListTest {
     @Test(expected = IndexOutOfBoundsException.class)
     public void testLargeIndex() {
         mappedList.listIterator(Integer.MAX_VALUE);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testSet() {
+        mappedList.set(3, 4);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testIteratorPassedSize() {
+        ListIterator<Integer> mappedIterator = mappedList.listIterator(mappedList.size());
+        mappedIterator.next();
+    }
+
+    @Test
+    public void testEndOfIterator() {
+        ListIterator<Integer> mappedIterator = mappedList.listIterator(mappedList.size());
+        assertFalse(mappedIterator.hasNext());
+        assertTrue(mappedIterator.hasPrevious());
+        assertEquals(mappingFunction.apply(originalList.get(originalList.size() - 1)), mappedIterator.previous());
     }
 }

@@ -16,31 +16,6 @@ public class CompositeSequentialList<E> extends AbstractSequentialList<E> {
     }
 
     @Override
-    public boolean add(E elem) {
-        return false;
-    }
-
-    @Override
-    public void add(int index, E elem) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public E remove(int index) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean remove(Object o) {
-        return false;
-    }
-
-    @Override
     public ListIterator<E> listIterator(int i) {
         return new CompositeSequentialListIterator<>(this, i);
     }
