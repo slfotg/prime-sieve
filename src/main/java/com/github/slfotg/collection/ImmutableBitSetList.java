@@ -17,7 +17,7 @@ public class ImmutableBitSetList extends AbstractSequentialList<Integer> {
 
     @Override
     public ListIterator<Integer> listIterator(int index) {
-        if (index != 0 && (index < 0 || index > size)) {
+        if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException();
         }
         return new ImmutableBitSetListIterator(bitSet, size, index);

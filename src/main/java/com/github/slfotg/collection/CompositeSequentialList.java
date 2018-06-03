@@ -16,8 +16,11 @@ public class CompositeSequentialList<E> extends AbstractSequentialList<E> {
     }
 
     @Override
-    public ListIterator<E> listIterator(int i) {
-        return new CompositeSequentialListIterator<>(this, i);
+    public ListIterator<E> listIterator(int index) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException();
+        }
+        return new CompositeSequentialListIterator<>(this, index);
     }
 
     @Override

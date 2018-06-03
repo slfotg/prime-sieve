@@ -1,17 +1,20 @@
 package com.github.slfotg.collection;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class CompositeSequentialListTest {
 
-    CompositeSequentialList<Integer> compositeList;
+    List<Integer> compositeList;
 
     @Before
     public void init() {
@@ -40,5 +43,42 @@ public class CompositeSequentialListTest {
             assertEquals(it1.previous(), it2.previous());
         }
         assertEquals(false, it2.hasPrevious());
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testNegativeIndex() {
+        compositeList.listIterator(-1);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testLargeIndex() {
+        compositeList.listIterator(Integer.MAX_VALUE);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testSet() {
+        compositeList.set(3, 4);
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testIteratorPassedSize() {
+        ListIterator<Integer> iterator = compositeList.listIterator(compositeList.size());
+        iterator.next();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testIteratorPrevious() {
+        ListIterator<Integer> iterator = compositeList.listIterator();
+        assertFalse(iterator.hasPrevious());
+        assertTrue(iterator.hasNext());
+        iterator.previous();
+    }
+
+    @Test
+    public void testEndOfIterator() {
+        ListIterator<Integer> iterator = compositeList.listIterator(compositeList.size());
+        assertFalse(iterator.hasNext());
+        assertTrue(iterator.hasPrevious());
+        assertEquals(Integer.valueOf(9), iterator.previous());
     }
 }

@@ -88,6 +88,14 @@ public class ImmutableBitSetListTest {
         iterator.next();
     }
 
+    @Test(expected = NoSuchElementException.class)
+    public void testIteratorPrevious() {
+        ListIterator<Integer> iterator = bitSetList.listIterator();
+        assertFalse(iterator.hasPrevious());
+        assertTrue(iterator.hasNext());
+        iterator.previous();
+    }
+
     @Test
     public void testEndOfIterator() {
         ListIterator<Integer> iterator = bitSetList.listIterator(bitSetList.size());
