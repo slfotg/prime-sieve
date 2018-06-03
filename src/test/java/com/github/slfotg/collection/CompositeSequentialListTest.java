@@ -56,6 +56,16 @@ public class CompositeSequentialListTest {
     }
 
     @Test(expected = UnsupportedOperationException.class)
+    public void testRemove() {
+        compositeList.remove(4);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testAdd() {
+        compositeList.add(7);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
     public void testSet() {
         compositeList.set(3, 4);
     }
