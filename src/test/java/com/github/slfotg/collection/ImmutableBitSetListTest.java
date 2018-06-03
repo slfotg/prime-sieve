@@ -61,7 +61,22 @@ public class ImmutableBitSetListTest {
         ImmutableBitSetList emptyList = new ImmutableBitSetList(new BitSet(10));
         emptyList.listIterator(-1);
     }
-    
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testLargeIndex() {
+        bitSetList.listIterator(Integer.MAX_VALUE);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testRemove() {
+        bitSetList.remove(4);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testAdd() {
+        bitSetList.add(7);
+    }
+
     @Test(expected = UnsupportedOperationException.class)
     public void testSet() {
         bitSetList.set(3, 4);
