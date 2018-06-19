@@ -63,7 +63,6 @@ public class CompositeSequentialListTest {
 
     @Test
     public void testAdd() {
-        System.out.println(compositeList);
         assertThrows(UnsupportedOperationException.class, () -> compositeList.add(7));
     }
 
