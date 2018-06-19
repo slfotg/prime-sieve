@@ -1,22 +1,23 @@
 package com.github.slfotg.collection;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class CompositeSequentialListTest {
 
     List<Integer> compositeList;
 
-    @Before
+    @BeforeEach
     public void init() {
         List<Integer> a = Arrays.asList(0, 1, 2);
         List<Integer> b = Arrays.asList();
@@ -45,43 +46,44 @@ public class CompositeSequentialListTest {
         assertEquals(false, it2.hasPrevious());
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testNegativeIndex() {
-        compositeList.listIterator(-1);
+        assertThrows(IndexOutOfBoundsException.class, () -> compositeList.listIterator(-1));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testLargeIndex() {
-        compositeList.listIterator(Integer.MAX_VALUE);
+        assertThrows(IndexOutOfBoundsException.class, () -> compositeList.listIterator(Integer.MAX_VALUE));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testRemove() {
-        compositeList.remove(4);
+        assertThrows(UnsupportedOperationException.class, () -> compositeList.remove(4));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testAdd() {
-        compositeList.add(7);
+        System.out.println(compositeList);
+        assertThrows(UnsupportedOperationException.class, () -> compositeList.add(7));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testSet() {
-        compositeList.set(3, 4);
+        assertThrows(UnsupportedOperationException.class, () -> compositeList.set(3, 4));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void testIteratorPassedSize() {
         ListIterator<Integer> iterator = compositeList.listIterator(compositeList.size());
-        iterator.next();
+        assertThrows(NoSuchElementException.class, () -> iterator.next());
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void testIteratorPrevious() {
         ListIterator<Integer> iterator = compositeList.listIterator();
         assertFalse(iterator.hasPrevious());
         assertTrue(iterator.hasNext());
-        iterator.previous();
+        assertThrows(NoSuchElementException.class, () -> iterator.previous());
     }
 
     @Test

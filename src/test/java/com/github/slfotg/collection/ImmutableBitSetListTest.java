@@ -1,8 +1,9 @@
 package com.github.slfotg.collection;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,14 +13,14 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ImmutableBitSetListTest {
 
     List<Integer> bitSetList;
 
-    @Before
+    @BeforeEach
     public void init() {
         BitSet bitSet = new BitSet(10);
         for (int i = 0; i < 10; i += 1) {
@@ -56,44 +57,44 @@ public class ImmutableBitSetListTest {
         assertFalse(iterator.hasNext());
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testNegativeIteratorIndex() {
         ImmutableBitSetList emptyList = new ImmutableBitSetList(new BitSet(10));
-        emptyList.listIterator(-1);
+        assertThrows(IndexOutOfBoundsException.class, () -> emptyList.listIterator(-1));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testLargeIndex() {
-        bitSetList.listIterator(Integer.MAX_VALUE);
+        assertThrows(IndexOutOfBoundsException.class, () -> bitSetList.listIterator(Integer.MAX_VALUE));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testRemove() {
-        bitSetList.remove(4);
+        assertThrows(UnsupportedOperationException.class, () -> bitSetList.remove(4));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testAdd() {
-        bitSetList.add(7);
+        assertThrows(UnsupportedOperationException.class, () -> bitSetList.add(7));
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testSet() {
-        bitSetList.set(3, 4);
+        assertThrows(UnsupportedOperationException.class, () -> bitSetList.set(3, 4));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void testIteratorPassedSize() {
         ListIterator<Integer> iterator = bitSetList.listIterator(bitSetList.size());
-        iterator.next();
+        assertThrows(NoSuchElementException.class, () -> iterator.next());
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void testIteratorPrevious() {
         ListIterator<Integer> iterator = bitSetList.listIterator();
         assertFalse(iterator.hasPrevious());
         assertTrue(iterator.hasNext());
-        iterator.previous();
+        assertThrows(NoSuchElementException.class, () -> iterator.previous());
     }
 
     @Test

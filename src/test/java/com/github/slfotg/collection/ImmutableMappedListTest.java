@@ -1,8 +1,9 @@
 package com.github.slfotg.collection;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,8 +13,8 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.function.Function;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ImmutableMappedListTest {
 
@@ -22,7 +23,7 @@ public class ImmutableMappedListTest {
     Function<Integer, Integer> mappingFunction;
     List<Integer> emptyList;
 
-    @Before
+    @BeforeEach
     public void init() {
         originalList = new LinkedList<>(Arrays.asList(1, 2, 3, 4, 5));
         mappingFunction = x -> 2 * x;
@@ -35,9 +36,9 @@ public class ImmutableMappedListTest {
         assertEquals(new ArrayList<>(), emptyList);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testAdd() {
-        mappedList.add(7);
+        assertThrows(UnsupportedOperationException.class, () -> mappedList.add(7));
     }
 
     @Test
@@ -46,9 +47,9 @@ public class ImmutableMappedListTest {
         assertEquals(6, mappedList.size());
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testRemove() {
-        mappedList.remove(4);
+        assertThrows(UnsupportedOperationException.class, () -> mappedList.remove(4));
     }
 
     @Test
@@ -67,25 +68,26 @@ public class ImmutableMappedListTest {
         }
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testNegativeIndex() {
-        mappedList.listIterator(-1);
+        assertThrows(IndexOutOfBoundsException.class, () -> mappedList.listIterator(-1));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
+    @Test
     public void testLargeIndex() {
-        mappedList.listIterator(Integer.MAX_VALUE);
+        assertThrows(IndexOutOfBoundsException.class, () -> mappedList.listIterator(Integer.MAX_VALUE));
+
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void testSet() {
-        mappedList.set(3, 4);
+        assertThrows(UnsupportedOperationException.class, () -> mappedList.set(3, 4));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void testIteratorPassedSize() {
         ListIterator<Integer> mappedIterator = mappedList.listIterator(mappedList.size());
-        mappedIterator.next();
+        assertThrows(NoSuchElementException.class, () -> mappedIterator.next());
     }
 
     @Test
