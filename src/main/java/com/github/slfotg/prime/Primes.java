@@ -49,6 +49,10 @@ public final class Primes {
         return new CompositeSequentialList<>(Arrays.asList(SMALL_PRIMES, largerPrimes));
     }
 
+    public static int[] getPrimesArray(int max) {
+        return getPrimes(max).stream().mapToInt(Integer::intValue).toArray();
+    }
+
     protected static BitSet sieve(int max) {
         int size = calculateBitSetSize(max);
         BitSet bitSet = new BitSet(size);
