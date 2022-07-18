@@ -1,16 +1,11 @@
 package com.github.slfotg.prime;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class PrimeCounter {
 
     private static final int DEFAULT_MAX_PRIME = 1000000;
 
     private int maxPrime;
     private int[] primes;
-    private Map<Long, Map<Long, Long>> phiCache = new HashMap<>();
-    private Map<Long, Long> piCache = new HashMap<>();
 
     protected PrimeCounter(int maxPrime) {
         this.maxPrime = maxPrime;
@@ -30,21 +25,10 @@ public class PrimeCounter {
             return (x + 1) / 2;
         }
 
-        return cachedPhi(x, a - 1) - cachedPhi(x / primes[(int) a - 1], a - 1);
+        return phi(x, a - 1) - phi(x / primes[(int) a - 1], a - 1);
     }
 
-    public long cachedPhi(long x, long a) {
-        if (!phiCache.containsKey(x)) {
-            phiCache.put(x, new HashMap<>());
-        }
-        Map<Long, Long> aMap = phiCache.get(x);
-        if (!aMap.containsKey(a)) {
-            aMap.put(a, phi(x, a));
-        }
-        return aMap.get(a);
-    }
-
-    public long pi(long x) {
+    public long countPrimes(long x) {
         if (x < maxPrime) {
             return binarySearch((int) x);
         }
@@ -53,7 +37,7 @@ public class PrimeCounter {
         long b = countPrimes((long) Math.pow(x, 1.0 / 2.0));
         long c = countPrimes((long) Math.pow(x, 1.0 / 3.0));
 
-        long result = cachedPhi(x, a) + (b + a - 2) * (b - a + 1) / 2;
+        long result = phi(x, a) + (b + a - 2) * (b - a + 1) / 2;
 
         for (int i = (int) a + 1; i <= b; i += 1) {
             long w = x / primes[i - 1];
@@ -68,13 +52,6 @@ public class PrimeCounter {
         }
 
         return result;
-    }
-
-    public long countPrimes(long x) {
-        if (!piCache.containsKey(x)) {
-            piCache.put(x, pi(x));
-        }
-        return piCache.get(x);
     }
 
     public int binarySearch(int x) {
