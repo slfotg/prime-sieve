@@ -1,0 +1,8 @@
+<aspectj>
+    <aspects>
+        <aspect name="com.github.slfotg.prime.CachingAspect"/>
+        <weaver options="-verbose -showWeaveInfo">
+            <include within="com.github.slfotg.prime.*"/>
+        </weaver>
+    </aspects>
+</aspectj>
