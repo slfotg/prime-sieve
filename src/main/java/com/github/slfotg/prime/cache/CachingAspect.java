@@ -11,14 +11,14 @@ public class CachingAspect {
     private Cache<Long> piCache = new Cache<>();
     private Cache<Cache<Long>> phiCache = new Cache<>();
 
-    @Pointcut("execution(public long com.github.slfotg.prime.PrimeCounter.countPrimes(long))")
-    public void countPrimes() {}
+    @Pointcut("execution(private long com.github.slfotg.prime.PrimeCounter.pi(long))")
+    public void pi() {}
 
-    @Pointcut("execution(public long com.github.slfotg.prime.PrimeCounter.phi(long, long))")
+    @Pointcut("execution(private long com.github.slfotg.prime.PrimeCounter.phi(long, long))")
     public void phi() {}
 
-    @Around("countPrimes()")
-    public Long aroundCountPrimes(ProceedingJoinPoint pjp) throws Throwable {
+    @Around("pi()")
+    public Long aroundPi(ProceedingJoinPoint pjp) throws Throwable {
         Long x = (Long) pjp.getArgs()[0];
         return piCache.getOrUpdate(x, () -> execute(pjp));
     }
